@@ -19,7 +19,7 @@ client.remove_command("help")
 async def help(ctx):
   em = discord.Embed(title = "Help <command>", description = "Use {YOUR PREFIX HERE} help for the Command List", color = ctx.author.color) #change your prefix here as your prefix
 
-  em.add_field(name = "Moderation", value = "Kick, Ban, Mute, Unmute, Slowmode, Clear, Warn,  Warnings, Lock, Unlock, Ping")
+  em.add_field(name = "Moderation", value = "Kick, Ban, Mute, Unmute, Slowmode, Clear, Warn,  Warnings, Lock, Unlock, Ping, Poll")
 
   await ctx.send(embed = em)
 
@@ -183,6 +183,13 @@ async def lock(ctx):
 async def unlock(ctx):
     await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
     await ctx.send(ctx.channel.mention + " ***has been unlocked.***")
+    
+@client.command()
+async def poll(ctx, *, question):
+    await ctx.channel.purge(limit=1)
+    message = await ctx.send(f"New poll: \n✅ = Yes\n❎ = No")
+    await message.add_reaction('❎')
+    await message.add_reaction('✅')
 
    
 
